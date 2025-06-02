@@ -1,0 +1,20 @@
+# RPSBLAST 2.7.1+
+# Query: locus:b0698 potassium translocating ATPase, subunit A [E. coli
+# Database: vendor/db/cdd/Smart
+# Fields: query acc.ver, subject acc.ver, % identity, alignment length, mismatches, gap opens, q. start, q. end, s. start, s. end, evalue, bit score
+# 14 hits found
+locus:b0698	CDD:197666	35.294	85	52	1	225	309	2	83	1.30e-19	76.1
+locus:b0698	CDD:197669	55.556	18	8	0	225	242	21	38	0.097	25.6
+locus:b0698	CDD:214774	14.634	41	35	0	17	57	136	176	2.7	23.2
+locus:b0698	CDD:197715	26.087	23	17	0	226	248	20	42	2.8	21.3
+locus:b0698	CDD:214950	32.258	31	21	0	146	176	15	45	3.1	22.7
+locus:b0698	CDD:197714	36.000	25	16	0	226	250	16	40	3.8	21.0
+locus:b0698	CDD:197556	57.143	14	6	0	149	162	99	112	4.8	22.2
+locus:b0698	CDD:214557	16.923	65	43	2	223	279	42	103	5.0	21.5
+locus:b0698	CDD:214838	52.174	23	5	1	138	160	244	260	5.9	22.0
+locus:b0698	CDD:197502	20.339	59	38	2	177	234	12	62	6.2	21.0
+locus:b0698	CDD:214744	17.857	84	44	4	155	216	35	115	7.3	21.8
+locus:b0698	CDD:197585	33.333	18	12	0	216	233	74	91	7.9	20.7
+locus:b0698	CDD:214628	38.889	18	11	0	226	243	19	36	8.7	20.9
+locus:b0698	CDD:214977	36.842	19	12	0	86	104	74	92	9.2	20.7
+# BLAST processed 1 queries

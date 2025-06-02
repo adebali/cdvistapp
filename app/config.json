@@ -1,0 +1,94 @@
+{
+    "databases": {
+        "versionToInstall": {
+            "hmmer-pfam": "30.0",
+            "hh-pfam": "pfam31.0",
+            "hh-pdb": "pdb",
+            "hh-scop": "scop",
+            "uniclust20": "uniclust20",
+            "uniclust30": "uniclust30",
+            "rps-cdd": "3.16"
+        },
+        "defaultVersion": {
+            "hmmer-pfam": "30.0",
+            "hh-pfam": "pfam31.0",
+            "hh-pdb": "pdb",
+            "hh-scop": "scop",
+            "uniclust": "uniclust30_hhsuite",
+            "uniclust20": "uniclust20",
+            "uniclust30": "uniclust30",
+            "rps-cdd": "3.16"
+        },
+        "hmmer-pfam" : {
+            "30.0": {
+                "name": "30.0",
+                "location": "/cdvist/db/pfam/30.0/Pfam-A.hmm"
+            },
+            "31.0": {
+                "name": "31.0",
+                "location": "/cdvist/db/pfam/31.0/Pfam-A.hmm"
+            }
+        },
+        "hhsuite": {
+            "pfam31.0": {
+                "name": "pfamA_31.0", 
+                "extension": "tgz", 
+                "location": "/cdvist/db/hh-suite/pfamA_31.0/pfam"
+            },
+            "pdb": {
+                "name": "pdb70_from_mmcif_latest",
+                "extension": "tar.gz",
+                "location": "/cdvist/db/hh-suite/pdb70_from_mmcif_latest/pdb70"
+            },
+            "scop": {
+                "name": "scop70_1.75_hhsuite3", 
+                "extension": "tar.gz", 
+                "location": "/cdvist/db/hh-suite/scop70_1.75_hhsuite3/scop70_1.75"
+            },
+            "uniclust30": {
+                "name": "uniclust30_2016_03", 
+                "extension": "tgz", 
+                "location": "/cdvist/db/hh-suite/uniclust30_2016_03/uniclust30_2016_03"
+            },
+            "uniprot20": {
+                "name": "uniprot20_2013_03", 
+                "extension": "tar.gz", 
+                "location": "/cdvist/db/hh-suite/uniprot20_2013_03/uniprot20_2013_03"
+            }
+        },
+        "uniclust": {
+            "uniclust20": {
+                "name": "uniboost20_2016_09",
+                "extension": "tar.gz",
+                "location": "/cdvist/db/uniclust/uniboost20_2016_09"
+            },
+            "uniclust30": {
+                "name": "uniclust30_2017_10",
+                "extension": "tar.gz",
+                "location": "/cdvist/db/uniclust/uniclust30_2017_10"
+            },
+            "uniclust30_hhsuite": {
+                "name": "uniclust30_2017_10_hhsuite",
+                "extension": "tar.gz",
+                "location": "/cdvist/db/uniclust/uniclust30_2017_10_hhsuite"
+            }
+        },
+        "rps-cdd": {
+            "3.16": {
+                "name": "3.16",
+                "location": "/cdvist/db/cdd",
+                "CDD": "/cdvist/db/cdd/Cdd_NCBI",
+                "COG": "/cdvist/db/cdd/Cog",
+                "KOG": "/cdvist/db/cdd/Kog",
+                "Pfam": "/cdvist/db/cdd/Pfam",
+                "PRK": "/cdvist/db/cdd/Prk",
+                "SMART": "/cdvist/db/cdd/Smart",
+                "TIGR": "/cdvist/db/cdd/Tigr"
+            }
+        }
+    },
+    "jobRoot": "/cdvist/static/job/fasta",
+    "parameters": {
+        "cpu": 8
+    }
+}

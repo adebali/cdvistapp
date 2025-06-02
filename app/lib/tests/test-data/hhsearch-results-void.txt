@@ -1,0 +1,9 @@
+Query         sp|P16473|TSHR_HUMAN Thyrotropin receptor OS-Homo sapiens GN-TSHR PE-1 SV-2
+Match_columns 764
+No_of_seqs    887 out of 5411
+Neff          10.161
+Searched_HMMs 16712
+Date          Mon Oct 23 21:05:08 2017
+Command       ./v3.0-beta.3/bin/hhsearch -i test.a3m -d vendor/db/hh-suite/pfamA_31.0/pfam -hide_cons -hide_pred -hide_dssp -o test.hhsearch.txt -norealign -cpu 16
+
+ No Hit                             Prob E-value P-value  Score    SS Cols Query HMM  Template HMM

@@ -1,0 +1,72 @@
+Query         sp|P16473|TSHR_HUMAN Thyrotropin receptor OS-Homo sapiens GN-TSHR PE-1 SV-2
+Match_columns 764
+No_of_seqs    887 out of 5411
+Neff          10.161
+Searched_HMMs 16712
+Date          Mon Oct 23 21:05:08 2017
+Command       ./v3.0-beta.3/bin/hhsearch -i test.a3m -d vendor/db/hh-suite/pfamA_31.0/pfam -hide_cons -hide_pred -hide_dssp -o test.hhsearch.txt -norealign -cpu 16
+
+ No Hit                             Prob E-value P-value  Score    SS Cols Query HMM  Template HMM
+  1 PF05462.10 ; Dicty_CAR ; Slime  99.8 1.8E-26 1.1E-30  236.7   0.0  300  409-729     2-305 (305)
+  2 PF04789.14 ; DUF621 ; Protein   99.8 3.4E-26   2E-30  234.5   0.0  293  403-702     1-304 (304)
+  3 PF10324.8 ; 7TM_GPCR_Srw ; Ser  99.8 3.6E-26 2.2E-30  233.2   0.0  277  419-696     1-306 (306)
+  4 PF02101.14 ; Ocular_alb ; Ocul  99.8 5.1E-26 3.1E-30  243.2   0.0  354  389-759     1-394 (397)
+  5 PF05296.12 ; TAS2R ; Taste rec  99.8 5.5E-26 3.3E-30  231.2   0.0  274  409-697     1-294 (294)
+  6 PF13853.5 ; 7tm_4 ; Olfactory   99.8 1.1E-25 6.9E-30  226.4   0.0  266  421-696     1-280 (280)
+  7 PF10292.8 ; 7TM_GPCR_Srab ; Se  99.8 2.2E-25 1.3E-29  231.3   0.0  307  403-711     5-325 (327)
+  8 PF02118.20 ; Srg ; Srg family   99.8 4.1E-25 2.5E-29  222.5   0.0  266  419-689     2-274 (274)
+  9 PF10323.8 ; 7TM_GPCR_Srv ; Ser  99.8 4.7E-25 2.8E-29  222.0   0.0  271  421-695     1-280 (280)
+ 10 PF03402.13 ; V1R ; Vomeronasal  99.8 5.1E-25 3.1E-29  220.8   0.0  240  440-691     2-265 (265)
+ 11 PF10321.8 ; 7TM_GPCR_Srt ; Ser  99.8 7.7E-25 4.6E-29  225.0   0.0  292  394-702     6-310 (310)
+ 12 PF10320.8 ; 7TM_GPCR_Srsx ; Se  99.8 8.4E-25   5E-29  217.1   0.0  255  425-693     1-256 (256)
+ 13 PF10322.8 ; 7TM_GPCR_Sru ; Ser  99.8 2.2E-24 1.3E-28  220.6   0.0  278  399-688     2-301 (301)
+ 14 PF10327.8 ; 7TM_GPCR_Sri ; Ser  99.8 2.3E-24 1.4E-28  220.4   0.0  277  410-689     4-303 (303)
+ 15 PF10326.8 ; 7TM_GPCR_Str ; Ser  99.8 6.4E-24 3.8E-28  217.1   0.0  269  417-690     1-302 (302)
+ 16 PF10317.8 ; 7TM_GPCR_Srd ; Ser  99.8   9E-24 5.4E-28  213.9   0.0  269  417-691     1-293 (293)
+ 17 PF10319.8 ; 7TM_GPCR_Srj ; Ser  99.8 2.7E-23 1.6E-27  213.2   0.0  273  414-689     4-309 (309)
+ 18 PF10318.8 ; 7TM_GPCR_Srh ; Ser  99.8 2.7E-23 1.6E-27  212.0   0.0  273  413-695     2-298 (298)
+ 19 PF02117.15 ; 7TM_GPCR_Sra ; Se  99.8 2.9E-23 1.7E-27  215.6   0.0  310  394-706     2-320 (328)
+ 20 PF03125.17 ; Sre ; C. elegans   99.7 5.8E-23 3.5E-27  215.8   0.0  289  395-709     8-328 (356)
+ 21 PF10328.8 ; 7TM_GPCR_Srx ; Ser  99.7 8.7E-23 5.2E-27  202.7   0.0  250  422-682     1-261 (261)
+ 22 PF00001.20 ; 7tm_1 ; 7 transme  99.7 2.5E-22 1.5E-26  198.9   0.0  239  431-678     1-253 (253)
+ 23 PF10316.8 ; 7TM_GPCR_Srbc ; Se  99.6 7.7E-21 4.6E-25  191.0   0.0  261  412-684     3-270 (272)
+ 24 PF01534.16 ; Frizzled ; Frizzl  99.6 2.4E-20 1.5E-24  193.6   0.0  283  410-696     3-332 (332)
+ 25 PF00002.23 ; 7tm_2 ; 7 transme  99.5 1.1E-18 6.4E-23  175.4   0.0  238  414-677     1-275 (275)
+ 26 PF02175.15 ; 7TM_GPCR_Srb ; Se  99.4 1.2E-17 6.9E-22  163.5   0.0  224  414-637     5-236 (236)
+ 27 PF11710.7 ; Git3 ; G protein-c  99.2 1.6E-15 9.7E-20  147.6   0.0  192  414-614     1-229 (230)
+ 28 PF14580.5 ; LRR_9 ; Leucine-ri  96.9 2.4E-06 1.4E-10   76.7   0.0  160  107-277     3-170 (175)
+ 29 PF14580.5 ; LRR_9 ; Leucine-ri  96.9 2.8E-06 1.7E-10   76.2   0.0  137   51-194    18-157 (175)
+ 30 PF03383.14 ; Serpentine_r_xa ;  96.1 5.2E-05 3.1E-09   65.9   0.0  107  447-558     1-112 (157)
+ 31 PF14580.5 ; LRR_9 ; Leucine-ri  95.1 0.00052 3.1E-08   60.7   0.0  104   52-157    64-172 (175)
+ 32 PF14580.5 ; LRR_9 ; Leucine-ri  95.1 0.00058 3.4E-08   60.4   0.0  131  172-314    15-150 (175)
+ 33 PF11970.7 ; GPR_Gpa2_C ; G pro  94.4  0.0015 8.7E-08   49.0   0.0   75  613-687     1-76  (76)
+ 34 PF13306.5 ; LRR_5 ; Leucine ri  91.1   0.018 1.1E-06   45.6   0.0  121   90-224     1-121 (124)
+ 35 PF13306.5 ; LRR_5 ; Leucine ri  88.4   0.047 2.8E-06   42.9   0.0  113   53-179    12-124 (124)
+ 36 PF13855.5 ; LRR_8 ; Leucine ri  85.2     0.1 6.1E-06   34.1   0.0   61   76-138     1-62  (62)
+ 37 PF02076.14 ; STE3 ; Pheromone   73.8    0.48 2.9E-05   44.9   0.0  203  427-647     1-212 (281)
+ 38 PF00560.32 ; LRR_1 ; Leucine R  70.3    0.66   4E-05   24.0   0.0   23  227-249     1-25  (25)
+ 39 PF13855.5 ; LRR_8 ; Leucine ri  65.9    0.95 5.7E-05   28.8   0.0   57  180-238     4-62  (62)
+ 40 PF13306.5 ; LRR_5 ; Leucine ri  65.6    0.97 5.8E-05   34.4   0.0   69   53-129    56-124 (124)
+ 41 PF12799.6 ; LRR_4 ; Leucine Ri  63.7     1.1 6.7E-05   25.6   0.0   41  101-144     1-41  (43)
+ 42 PF06681.12 ; DUF1182 ; Protein  60.9     1.4 8.2E-05   36.6   0.0  175  422-604    25-199 (203)
+ 43 PF12799.6 ; LRR_4 ; Leucine Ri  60.4     1.4 8.4E-05   25.0   0.0   40  200-243     1-40  (43)
+ 44 PF00560.32 ; LRR_1 ; Leucine R  60.2     1.4 8.6E-05   22.4   0.0   23   53-75      1-25  (25)
+ 45 PF00560.32 ; LRR_1 ; Leucine R  57.2     1.7  0.0001   22.1   0.0   23  102-125     1-25  (25)
+ 46 PF16101.4 ; PRIMA1 ; Proline-r  54.6     2.1 0.00012   33.7   0.0   34  417-450    63-98  (123)
+ 47 PF13306.5 ; LRR_5 ; Leucine ri  51.8     2.5 0.00015   31.9   0.0  114  147-273     8-124 (124)
+ 48 PF12799.6 ; LRR_4 ; Leucine Ri  50.1     2.7 0.00016   23.6   0.0   40   52-94      1-40  (43)
+ 49 PF13855.5 ; LRR_8 ; Leucine ri  40.9     4.7 0.00028   24.9   0.0   56  226-281     1-61  (62)
+ 50 PF00560.32 ; LRR_1 ; Leucine R  28.6      10  0.0006   18.6   0.0   23  152-175     1-25  (25)
+ 51 PF12799.6 ; LRR_4 ; Leucine Ri  21.8      16 0.00098   19.6   0.0   40  151-194     1-40  (43)
+ 52 PF13855.5 ; LRR_8 ; Leucine ri  20.2      19  0.0011   21.6   0.0   37   52-89     26-62  (62)
+
+No 1
+>PF05462.10 ; Dicty_CAR ; Slime mold cyclic AMP receptor
+Probab=99.85  E-value=1.8e-26  Score=236.73  Aligned_cols=300  Identities=9%  Similarity=-0.009  Sum_probs=0.0  Template_Neff=12.100
+
+Q sp|P16473|TSHR  409 EDIMGYKFLRIVVWFVSLLALLGNVFVLLILLTSHYKLNVPRFLMCNLAFADFCMGMYLLLIASVDLYTHSEYYNHAIDW  488 (764)
+                      ++........++..+++++|++||+++++++.+.++.|+..+.++.+||++|++.++...+.............
+T CAR1_DICDI/4-3    2 DGNPANETSLVLLLFADFSSMLGCMAVLIGFWRLKLLRNHVTKVIACFCATSFCKDFPSTILTLTNTAVNGGFP------   75 (305)
+
+
+Q sp|P16473|TSHR  489 QTGPGCNTAGFFTVFASELSVYTLTVITLERWYAITFAMRLDRKIRLRHACAIMVGGWVCCFLLALLPLVGISSYAKVSI  568 (764)

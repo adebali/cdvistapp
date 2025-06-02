@@ -1,0 +1,18 @@
+{
+    "domains": [
+        {
+            "alignment length": 85.0,
+            "bit score": 76.1,
+            "evalue": 1.3e-19,
+            "gap opens": 1.0,
+            "identity": 35.294,
+            "mismatches": 52.0,
+            "q. end": 309.0,
+            "q. start": 225.0,
+            "query acc.ver": "locus:b0698",
+            "s. end": 83.0,
+            "s. start": 2.0,
+            "subject acc.ver": "smart00342"
+        }
+    ]
+}

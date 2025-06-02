@@ -1,0 +1,44 @@
+Query         31.942-1011
+Match_columns 70
+No_of_seqs    1 out of 1
+Neff          1
+Searched_HMMs 16712
+Date          Tue Apr 10 14:53:57 2018
+Command       /flask-app/vendor/tools/hhsuite/v3.0-beta.3/bin/hhsearch -i /flask-app/static/job/fasta/180410_yuyuget/31_942-1011_hhblits_uniprot20.a3m -o /flask-app/static/job/fasta/180410_yuyuget/31_942-1011_hhsearch_pfam31.0.hhr -cpu 8 -d /flask-app/vendor/db/hh-suite/pfamA_31.0/pfam
+
+ No Hit                             Prob E-value P-value  Score    SS Cols Query HMM  Template HMM
+  1 PF06037.10 ; DUF922 ; Bacteria  19.6      20  0.0012   20.3   0.0   17   25-41     86-102 (157)
+  2 PF03388.12 ; Lectin_leg-like ;  17.2      24  0.0014   19.4   0.0    9   29-37      1-9   (207)
+  3 PF08106.10 ; Antimicrobial11 ;  17.0      24  0.0015   15.8   0.0    6   44-49      2-7   (16)
+  4 PF05644.10 ; Miff ; Mitochondr  15.5      28  0.0017   24.1   0.0   26    4-29     50-75  (316)
+  5 PF03826.16 ; OAR ; OAR domain   15.1      29  0.0018   15.1   0.0   12   14-25      4-15  (19)
+  6 PF13894.5 ; zf-C2H2_4 ; C2H2-t  14.0      33   0.002    7.9   0.0    1   31-31     19-19  (24)
+  7 PF09189.9 ; DUF1952 ; Domain o  12.4      39  0.0023   18.5   0.0    9   18-26     64-72  (72)
+  8 PF08159.11 ; NUC153 ; NUC153 d  12.2      40  0.0024   15.3   0.0    6   20-25      2-7   (27)
+  9 PF05910.11 ; DUF868 ; Plant pr  11.1      46  0.0027   22.5   0.0   18   33-50    186-205 (272)
+ 10 PF11725.7 ; AvrE ; Pathogenici  11.1      46  0.0027   28.1   0.0   49    1-54   1673-1721(1775)
+
+No 1
+>PF06037.10 ; DUF922 ; Bacterial protein of unknown function (DUF922)
+Probab=19.59  E-value=20  Score=20.27  Aligned_cols=17  Identities=35%  Similarity=0.534  Sum_probs=12.6  Template_Neff=8.200
+
+Q 31.942-1011      25 MRELRQHEQRHSFRGSQ   41 (70)
+Q Consensus        25 mrelrqheqrhsfrgsq   41 (70)
+                      +..|..|||.|.--+-.
+T Consensus        86 ~~~L~~HE~~H~~ia~~  102 (157)
+T K9RV72_SYNP3/4   86 YQALQMHEDGHSNHGRA  102 (157)
+T ss_pred             HHHHHHHHHHHHHHHHH
+Confidence            56799999999755443
+
+
+No 2
+>PF03388.12 ; Lectin_leg-like ; Legume-like lectin family
+Probab=17.16  E-value=24  Score=19.43  Aligned_cols=9  Identities=44%  Similarity=0.383  Sum_probs=6.9  Template_Neff=9.800
+
+Q 31.942-1011      29 RQHEQRHSF   37 (70)
+Q Consensus        29 rqheqrhsf   37 (70)
+                      |+++++|||
+T Consensus         1 ~~~~~~~~~    9 (207)
+T YOC5_SCHPO/23-    1 SQFLQLHSL    9 (207)
+T ss_pred             Ccccccccc
+Confidence            467888888

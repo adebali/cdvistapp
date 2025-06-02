@@ -1,0 +1,19 @@
+{
+    "domains": [
+        {
+            "no": 1,
+            "hit": "PF05462.10 ; Dicty_CAR ; Slime",
+            "prob": 99.8,
+            "evalue": 1.8e-26,
+            "pvalue": 1.1e-30,
+            "score": 236.7,
+            "ss": 0.0,
+            "cols": 300,
+            "query": "409-729",
+            "template": "2-305",
+            "hmm": 305
+        }
+    ],
+    "name": "sp|P16473|TSHR_HUMAN Thyrotropin receptor OS-Homo sapiens GN-TSHR PE-1 SV-2",
+    "length": 764
+}
