@@ -1,6 +1,8 @@
 import os
 import json
-from lib import fasta
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
+import fasta
 
 def makeJson(id, inputFile, tools):
     jobs = []

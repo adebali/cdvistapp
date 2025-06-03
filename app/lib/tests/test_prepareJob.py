@@ -1,7 +1,5 @@
 import os
-import sys
-sys.path.append('../../')
-from prepareJob import makeJson
+from ...prepareJob import makeJson
 
 testDataDir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'test-data')
 

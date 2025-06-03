@@ -9,16 +9,22 @@ def domains2intervalSet(domains):
     intervals = p.empty()
     for domain in domains:
         intervals |= domain2interval(domain)
-    return set(intervals)
+    return intervals
 
 def intervals2unassignedSegments(intervals, intervalLengthCutoff=0):
     unassignedSegments = []
-    for interval in intervals.items():
+    for interval in intervals:
         intervalLength = interval.upper - interval.lower + 1
         if intervalLength > intervalLengthCutoff:
+            lo = 0
+            ro = 0
+            if str(interval.left) == "OPEN":
+                lo = 1
+            if str(interval.right) == "OPEN":
+                ro = 1
             unassignedSegments.append({
-                'start': interval.lower,
-                'end': interval.upper
+                'start': interval.lower + lo,
+                'end': interval.upper - ro
             })
     return unassignedSegments
 

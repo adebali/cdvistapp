@@ -13,13 +13,13 @@ def test_intervals():
         }
     }
     unassignedSegments = [
-        {'start': 1, 'end': 30},
-        {'start': 50, 'end': 100},
-        {'start': 110, 'end': 160},
-        {'start': 190, 'end': 200}
+        {'start': 1, 'end': 29},
+        {'start': 51, 'end': 99},
+        {'start': 111, 'end': 159},
+        {'start': 191, 'end': 200}
     ]
     assert domain2interval({'start': 10, 'end': 20}) == p.closed(10, 20)
-    assert domains2intervalSet(proteinObject['segments']['assigned']) == set([p.closed(30,50), p.closed(100,110), p.closed(160,190)])
+    assert domains2intervalSet(proteinObject['segments']['assigned']) == p.closed(30,50) | p.closed(100,110) | p.closed(160,190)
     assert getUnassignedSegments(proteinObject) == unassignedSegments
 
     originalInterval = p.closed(150, 250)
