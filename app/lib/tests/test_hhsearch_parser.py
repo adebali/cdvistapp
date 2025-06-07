@@ -1,7 +1,9 @@
 #!/usr/bin/python
 import os
-from ..hhsearch_parser import HHsearchResult
-from ..utils import jsonFile2dict
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from hhsearch_parser import HHsearchResult
+from utils import jsonFile2dict
 
 def test_hhsearchResult():
     testDataDir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'test-data')        
@@ -16,4 +18,3 @@ def test_hhsearchResult():
     void_hhsearch_result = HHsearchResult(os.path.join(testDataDir, 'hhsearch-results-void.txt'))
     expectedDomains = jsonFile2dict(os.path.join(testDataDir, 'hhsearch-results-void.json'))
     assert void_hhsearch_result.getResults()['domains'] == expectedDomains['domains']
-

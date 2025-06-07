@@ -35,6 +35,7 @@ def getUnassignedSegments(proteinObject, gapLength=0):
     domainIntervals = domains2intervalSet(domains)
     unassignedIntervals = proteinInterval - domainIntervals
     unassignedSegments = intervals2unassignedSegments(unassignedIntervals, gapLength)
+    print(f"Unassigned segments: {unassignedSegments}")
     return unassignedSegments
 
 def relativeIntervalTransform(originalInterval, subInterval):

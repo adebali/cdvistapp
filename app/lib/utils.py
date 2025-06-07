@@ -38,7 +38,7 @@ def _byteify(data, ignore_dicts = False):
     return data
 
 def jsonFile2dict(filePath):
-    return json_load_byteified(open(filePath))
+    return json.loads(open(filePath).read())
 
 def extension_fa(filename):
     return '.'.join(filename.split('.')[:-1]) + '.fa'

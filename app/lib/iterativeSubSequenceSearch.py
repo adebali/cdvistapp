@@ -20,6 +20,7 @@ def runSingleProtein(proteinObject, toolJob, callFunction):
     def iterateSegments(proteinObject, gapLengthCutoff, callFunction):
         proteinSequence = seq(proteinObject['sequence'])
         unassignedSegments = getUnassignedSegments(proteinObject)
+        print('Unassigned segments:', unassignedSegments)
         for segment in unassignedSegments:
             subSequence = proteinSequence.subseq(segment['start'] - 1, segment['end']).getSequence()
             segmentLength = segment['end'] - segment['start']
@@ -33,6 +34,7 @@ def runSingleProtein(proteinObject, toolJob, callFunction):
                     }
                 }
                 domains = callFunction(subSequence, segment, toolJob)
+                print('Domains found:', domains)
                 if domains != []:
                     partialProteinObject['segments']['assigned'] = domains
                     proteinObject = updateProteinWithNewDomains(proteinObject, segment, partialProteinObject)
@@ -43,7 +45,7 @@ def runSingleProtein(proteinObject, toolJob, callFunction):
         return proteinObject
 
     finalProteinObject = iterateSegments(proteinObject, gapLengthCutoff, callFunction)
-    print(finalProteinObject)
+    # print(finalProteinObject)
     return finalProteinObject
 
 
