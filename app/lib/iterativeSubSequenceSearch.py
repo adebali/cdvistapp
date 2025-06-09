@@ -69,6 +69,7 @@ def runSingleProtein(proteinObject, toolJob, callFunction):
         if not new_domain_found:
             break
 
+
     return proteinObject
 
 

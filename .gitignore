@@ -3,3 +3,4 @@ app/lib/__pycache__
 app/lib/tests/__pycache__
 db/*
 .DS_Store
+app/lib/tests/__pycache__/*
