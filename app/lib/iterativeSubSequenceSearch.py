@@ -23,9 +23,11 @@ def runSingleProtein(proteinObject, toolJob, callFunction):
         print('Unassigned segments:', unassignedSegments)
         for segment in unassignedSegments:
             subSequence = proteinSequence.subseq(segment['start'] - 1, segment['end']).getSequence()
-            segmentLength = segment['end'] - segment['start']
+            print('Subsequence:', subSequence)
+            segmentLength = segment['end'] - segment['start'] + 1
+            print('Segment length:', segmentLength)
             segmentInterval = str(segment['start']) + '..' + str(segment['end'])
-            if (segmentInterval not in voidSet) and segmentLength >= gapLengthCutoff:
+            if (segmentInterval not in voidSet) and segmentLength > gapLengthCutoff:
                 partialProteinObject = {
                     'sequence': subSequence,
                     'length': segmentLength,
@@ -38,6 +40,7 @@ def runSingleProtein(proteinObject, toolJob, callFunction):
                 if domains != []:
                     partialProteinObject['segments']['assigned'] = domains
                     proteinObject = updateProteinWithNewDomains(proteinObject, segment, partialProteinObject)
+                    print(proteinObject)
                     proteinObject = iterateSegments(proteinObject, gapLengthCutoff, callFunction)
                 voidSet.add(segmentInterval)
             else:

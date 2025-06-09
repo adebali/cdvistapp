@@ -58,7 +58,7 @@ def test_iterate():
     print(result)
     expectedResult = copy.deepcopy(proteinObject)
     expectedResult['segments']['assigned'] = [{'start': 2, 'end': 4}, {'start': 6, 'end': 8}, {'start': 10, 'end': 15}]
-    # assert result == expectedResult
+    assert result == expectedResult
 
 def test_voidIterate():
     def pseudoDomainFinder(subSequence, segment, toolJob):
