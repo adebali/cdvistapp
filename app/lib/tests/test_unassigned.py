@@ -24,10 +24,10 @@ def test_intervals():
 
     originalInterval = p.closed(150, 250)
     subInterval = p.closed(10, 35)
-    assert relativeIntervalTransform(originalInterval, subInterval) == p.closed(160, 185)
+    assert relativeIntervalTransform(originalInterval, subInterval) == p.closed(159, 184)
 
     originalDomain = {'start': 150, 'end': 250}
     subDomain = {'start': 10, 'end': 35, 'anotherField': 'exists'}
-    assert relativeDomainTransform(originalDomain, subDomain) == {'start': 160, 'end': 185, 'anotherField': 'exists'}
+    assert relativeDomainTransform(originalDomain, subDomain) == {'start': 159, 'end': 184, 'anotherField': 'exists'}
 
 

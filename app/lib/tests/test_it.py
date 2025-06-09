@@ -28,7 +28,7 @@ def test_iterate():
     toolJob = {'gap_length': 2, 'db': 'pfam31', 'prob': 0.60}
     proteinObject = copy.deepcopy(exampleProteinObject2)
     result = runSingleProtein(proteinObject, toolJob, pseudoDomainFinder2)
-    print(result)
+    # print(result)
     expectedResult = copy.deepcopy(proteinObject)
-    expectedResult['segments']['assigned'] = [{'start': 2, 'end': 4}, {'start': 6, 'end': 8}, {'start': 10, 'end': 15}]
+    expectedResult['segments']['assigned'] = [{'start': 2, 'end': 4}, {'start': 5, 'end': 10}, {'start': 12, 'end': 14}, {'start': 17, 'end': 20}, {'start': 22, 'end': 24}]
     assert result == expectedResult

@@ -1,5 +1,9 @@
 {
     "python.analysis.extraPaths": [
         "./app/lib"
-    ]
+    ],
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pytest_cache": true
+    }
 }
