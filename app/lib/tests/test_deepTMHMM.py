@@ -1,7 +1,9 @@
 import biolib
 import os
-from ..utils import jsonFile2dict
-from ..deepTMHMM_3line_parser import deepTMHMMresult
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils import jsonFile2dict
+from deepTMHMM_gff3_parser import deepTMHMM
 
 # app = biolib.load('DTU/DeepTMHMM:1.0.24')
 
@@ -12,8 +14,11 @@ from ..deepTMHMM_3line_parser import deepTMHMMresult
 # result.save_files('test-data/deepTMHMM_results')
 
 
-def test_deepTMHMMresult():
+def test_deepTMHMM():
     testDataDir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'test-data') 
-    deepTMHMM = deepTMHMMresult(os.path.join(testDataDir,'deepTMHMM_results', 'predicted_topologies.3line'))
-    expectedDomains = jsonFile2dict(os.path.join(testDataDir, 'tmhmm-short_results.json'))
-    assert deepTMHMM.results == expectedDomains
+    deepTMHMMobject = deepTMHMM(os.path.join(testDataDir,'deepTMHMM_results', 'TMRs.gff3'))
+    expectedDomains = jsonFile2dict(os.path.join(testDataDir, 'deepTMHMM_gff3_results.json'))
+    print(deepTMHMMobject.results)
+    assert set(deepTMHMMobject.results) == set(expectedDomains)
+
+test_deepTMHMM()
