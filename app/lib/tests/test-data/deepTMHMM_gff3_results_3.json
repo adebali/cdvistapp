@@ -1,0 +1,30 @@
+[
+    {
+    "protein": "ref|XP_023931987.1|",
+    "domains": 
+        [
+            {
+                "name": "outside",
+                "domains": [[1, 2350], [2406, 2414]]
+            },
+            {
+                "name": "TMhelix",
+                "domains": [[2351, 2373], [2385, 2405], [2415, 2436]]
+            },
+            {
+                "name": "inside",
+                "domains": [[2374, 2384], [2437, 2466]]
+            }
+        ]
+    },
+    {
+        "protein": "ref_XP_023931987.999_uncharacterized_protein_LOC106169985_Lingula_anatina_",
+        "domains": 
+            [
+                {
+                    "name": "outside",
+                    "domains": [[1, 910]]
+                }
+            ]
+    }
+]
