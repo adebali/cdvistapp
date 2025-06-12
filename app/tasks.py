@@ -1,26 +1,12 @@
-# import time
-# from . import celery
-
-
 #!/usr/bin/env python
 
-import os
 import time
-from celery import Celery, current_task
-
-
-env=os.environ
-CELERY_BROKER_URL=env.get('REDIS_HOST','redis://redis:6379'),
-CELERY_RESULT_BACKEND=env.get('REDIS_HOST','redis://redis:6379')
+from celery import current_task
+from . import celery
 
 import sys
 sys.path.append('/cdvist/app/lib')
 import cdvist_pipeline
-
-celery= Celery('tasks',
-                broker=CELERY_BROKER_URL,
-                backend=CELERY_RESULT_BACKEND)
-
 
 @celery.task
 def add_together(a, b):
