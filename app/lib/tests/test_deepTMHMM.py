@@ -11,7 +11,6 @@ application_name = 'DTU/DeepTMHMM:1.0.24'
 app = biolib.load(application_name)
 test_data_dir = os.path.join(os.path.dirname(__file__),'test-data')
 
-pytest_plugins = ["test_hooks"]
 
 @pytest.mark.parametrize(
     "input_fasta, output_dir, expected_file",
@@ -20,6 +19,7 @@ pytest_plugins = ["test_hooks"]
         ("fasta-test.3.fa", "deepTMHMM_test_results_3", "deepTMHMM_gff3_results_3.json"),
     ]
 )
+
 
 def test_deepTMHMM(input_fasta, output_dir, expected_file, request):
     # Check if the --run-long option is provided
