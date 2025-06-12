@@ -1,0 +1,183 @@
+<html>
+    <head>
+        <meta http-equiv="cache-control" content="no-cache"> 
+        <meta http-equiv="expires" content="0"> 
+        <meta http-equiv="pragma" content="no-cache">
+    </head>
+    <body>
+    </body>
+</html>
+
+<script src="/static/js/d3/d3.v4.min.js"></script>
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="//github.hubspot.com/tether/dist/js/tether.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js" integrity="sha384-CchuzHs077vGtfhGYl9Qtc7Vx64rXBXdIAZIPbItbNyWIRTdG0oYAqki3Ry13Yzu" crossorigin="anonymous"></script>
+
+<!-- <script src="/static/frontDomain.js"></script> -->
+<script src="/static/dad.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<style>
+
+    div.tooltip {	
+        top: 0px;
+        position: fixed;
+        text-align: center;			
+        padding: 2px;				
+        font: 12px sans-serif;		
+        border: 0px;		
+        border-radius: 8px;			
+        pointer-events: none;
+        background-color: lightsteelblue;
+        opacity: 0.8;	
+    }
+    .info {
+        margin:20px;
+    }
+</style>
+<script>
+    function getUrlVars() {
+        let vars = {}
+        let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+            function(m,key,value) {
+            vars[key] = value;
+            })
+        return vars
+    }
+    let urlParams = getUrlVars()
+    let jobId = urlParams['id']
+    let successFlag = urlParams['success']
+    let failureFlag = urlParams['fail']
+    let indexParameter = urlParams['index']
+    // let dataFile = urlParams['f'] ? urlParams['f'] : 'job/fasta/171005_suxumid/request.json'
+    // let dataFile = 'static/job/fasta/' + '{{ id }}'  + '/request.json'
+    let dataFile = 'job/fasta/' + jobId + '/request.json'
+    if (successFlag == 'true') {
+        dataFile = dataFile + '?success=true'
+    }
+    if (indexParameter) {
+        dataFile = dataFile + '?index=' + indexParameter
+    }
+
+    console.log(dataFile)
+
+
+    let menu = d3.select('body')
+        .append('p')
+        
+        menu.append('a')
+        .attr('href', '/')
+        .append('img')
+        .attr('src', '/static/img/logo.png')
+        .attr('width', '80px')
+        .attr('title', 'Home')
+        
+        if (successFlag) {
+
+            menu.append('b').text(' | ')
+            .style('vertical-align', 'bottom')
+            
+            menu.append('a')
+            .attr('href', '/static/job/fasta/' + jobId + '/request.json?download=true')
+            .attr('target', '_blank')
+            .style('vertical-align', 'bottom')
+            .text('Download JSON')
+ 
+            // menu.append('b').text(' | ')
+            // .style('vertical-align', 'bottom')
+            
+            // menu.append('a')
+            // .attr('href', '#')            
+            // .attr('onclick', 'saveSvgAsFile()')
+            // .style('vertical-align', 'bottom')            
+            // .text('Download SVG')
+
+            menu.append('b').text(' | ')
+            .style('vertical-align', 'bottom')
+            
+            menu.append('span')
+                .attr('id', 'probBar')
+                .style('vertical-align', 'bottom')
+            
+        }
+
+        // menu.append('b').text(' | ')
+        // .style('vertical-align', 'bottom')
+
+        let statusParagraph = menu.append('text')
+            .style('vertical-align', 'bottom')
+            .attr('id', 'statusParagraph')
+        
+        
+
+
+    statusParagraph.append('a')
+        .attr('href', '/status/' + jobId)
+        .attr('target', '_blank')
+        .style('vertical-align', 'bottom')
+        .append('img')
+        .attr('src', '/static/img/spin.gif')
+        .style('width', '30px')
+
+    // d3.json('/check/' + jobId, function(progressError,progressObject) {
+    //     if (progressError) {
+    //         console.log('error here')
+    //     }
+    //     d3.select('body')
+    //         .append('p')
+    //         .text('status: ' + progressObject.status)
+    // })
+
+
+    kCheckTime = 5000
+    let toolIndex
+
+    d3.json('/status/' + jobId, function(progressError,progressObject){
+        toolIndex = progressObject.toolIndex
+        currentProteinIndex = progressObject.current
+    })
+
+    if (successFlag != 'true' && failureFlag != 'true') {
+        
+        window.setInterval(function(){
+            d3.json('/status/' + jobId, function(progressError,progressObject){
+                
+                if (progressError) {
+                    d3.select('#statusParagraph').text('Cannot get status information!')
+                }
+                // d3.select('#statusParagraph').text(progressObject.state.toLowerCase() + ' ' + Math.random() + ' ' + 'Running ' + progressObject.job + ' ' + progressObject.current + '/' + progressObject.toolIndex + ' for entry ' + progressObject.current + '/' + progressObject.total)
+                d3.select('#statusParagraph').text('Status: ' + progressObject.state.toLowerCase() + ' [' + 'Running ' + progressObject.job + ' ' + progressObject.current + '/' + progressObject.toolIndex + ' for entry ' + progressObject.current + '/' + progressObject.total + ']')
+                
+                if (progressObject.state == "SUCCESS") {
+                    if (successFlag != 'true') {
+                        let url = window.location.href  
+                        console.log(url + '&success=true') 
+                        window.location.href = url + '&success=true'
+                    }
+                }
+                else {
+                    if (progressObject.toolIndex > toolIndex | progressObject.current > currentProteinIndex) {
+                        // let url = window.location.href                         
+                        window.location.href = window.location.origin + window.location.pathname + '?id=' + jobId + '&index=' + currentProteinIndex + '_' + toolIndex
+                    }
+                }
+                // d3.select('#statusParagraph').text(progressObject.state + ' ' + Math.random() + ' ' + 'Running ' + progressObject.job + ' ' + progressObject.current + '/' + progressObject.toolIndex + ' for entry ' + progressObject.current + '/' + progressObject.total)
+        
+            }, 5000)
+        }, kCheckTime);
+    }   
+    else {
+        d3.json('/status/' + jobId, function(progressError,progressObject){
+            if (progressObject.state != 'SUCCESS') {
+                d3.select('#statusParagraph').text('Status: ' + progressObject.state)
+            }
+            else {
+                d3.select('#statusParagraph').text('')
+            }
+        })
+    }
+
+    drawFromFile(dataFile, true, false)
+
+
+</script>

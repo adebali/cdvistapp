@@ -1,0 +1,244 @@
+
+<html>
+        <head>
+            <title>CDvist - Domain Architectures</title>
+            <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+            <!-- <meta http-equiv="Cache-control" content="no-cache"> -->
+            <meta http-equiv="Expires" content="-1">
+            <link rel="stylesheet" type="text/css" href="css/codost_style.css">
+            <SCRIPT LANGUAGE="JavaScript"></SCRIPT>
+            <script src="js/jquery-1.11.3.min.js"></script>
+            <script src="js/CDvistJ.js"></script>
+            <script src="js/d3/d3.min.js"></script>
+            <script src="js/svg-pan-zoom.js"></script>
+            <script src="js/jquery-ui.min.js"></script>
+            <style>
+                #progress {
+                    position:relative;
+                    width:100%;
+                    height:2px;
+                    border:0px solid red;
+                }
+    
+                #progress .progress-bar {
+                    background:#2c3e50;
+                    height:2px;
+                    width:0%;
+                    display:inline-block;
+                }
+    
+                #progress .progress-text {
+                    position:absolute;
+                    z-index:2;
+                    right:0;
+                }
+            </style>
+    
+    
+        </head>
+         
+         <body link="black">
+            <table style="margin-bottom:0px;" id="header" border="0">
+                <tr id="menu"></tr>
+            </table>
+    
+            <table border=0>
+                <tr style="height:15px;">  
+                    <td align="left" width="700px" valign="top" id="statusBar" class="statusbars" colspan="1"></td>
+                    <!--<td><label id=countdown></label></td>-->
+                </tr>
+                <tr>
+                    <td style="background:white" width="660" valign="top" colspan="1">
+                    <div id="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    </td>
+                </tr>
+            </table>
+    
+            <div id="mymethod" class="method"></div>
+            
+            <div>
+                <table id="mainTable"></table>
+            </div>
+            <script>
+                    $.ajaxSetup({ cache: false});            
+            </script>
+            <script>
+                function progressBar(){
+                    var progression = 0,
+                    progress = setInterval(function() 
+                    {
+                    $('#progress .progress-text').text(progression + '%');
+                    $('#progress .progress-bar').css({'width':progression+'%'});
+                    if(progression > 100) {
+                        clearInterval(progress);
+                        $('#progress').hide();
+                        // alert('done');
+                        // location.reload(true);
+                        
+                    } else
+                        progression += .01;
+                    
+                    },10);
+                }
+    
+                function getUrlVars() {
+                    var vars = {};
+                    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+                    function(m,key,value) {
+                    vars[key] = value;
+                    });
+                    return vars;
+                }
+    
+    
+                function jsonData2aliJson(JsonAli){
+                    aliData = {}
+                    $.ajax({
+                      url: JsonAli,
+                      dataType: 'json',
+                      async: false,
+                    //  data: data,
+                      success: function(data) {
+                          //console.log('#######')
+                        //console.log(data);
+                        for (i=0;i<data["entries"].length;i++){
+                            aliData[data["entries"][i]["num"]] = data["entries"][i]["fullsequence"];
+                            }
+                        },
+                      error: function(data){
+                      console.log("####error####");
+                      
+                      
+                          }
+                    });
+                    return aliData;
+                }
+    
+    
+                vars = getUrlVars();
+                var JSONfile = vars["f"];
+                var ALIGNMENTmode = vars["ali"];
+                var ID = JSONfile.substr(0,20);
+                var aliJsonFile = "/codost_out/" + ID + "/aligned.json";
+    
+                if (ALIGNMENTmode == "1"){
+                    var aliData = jsonData2aliJson(aliJsonFile);
+                    //console.log(aliData);
+                    }
+    
+                
+    
+    
+                $("#menu").append(codostmenu(ID));
+                //console.log(JSONfile);
+                // let previous = null
+                // let current = null
+                // setInterval(function(){
+                //     $.getJSON(JSONfile, function(data){
+                //         current = JSON.stringify(data)
+                //         if (previous && current && previous !== current) {
+                //             // location.reload(true)
+                //             console.log('location.reload()')
+                //         }
+                //         previous = current
+                //     }).fail(function(jqXHR, status, error){
+                //         $('head').append('<meta http-equiv="refresh" content="55">');
+                //         if(status == 'parseerror'){
+                //            console.log("not valid json");
+                //         }
+                //          else {
+                //         console.log("some other error");
+                //         console.log(error);
+                //         }
+                //     })
+                // }, 200000)
+                // $(document).ready(function() {
+                //     $.ajaxSetup({ cache: false });
+                // });
+
+                $.getJSON(JSONfile, function(data){
+                    drawTable(data["entries"]);
+                    }).fail(function(jqXHR, status, error){
+                        $('head').append('<meta http-equiv="refresh" content="55">');
+                        if(status == 'parseerror'){
+                           console.log("not valid json");
+                        }
+                         else {
+                        console.log("some other error");
+                        console.log(error);
+                        }
+                    });
+                                   
+                    
+                function drawMethod(param){
+                    $("#mymethod").append(drawParam(param));
+                }
+                    
+                function drawTable(entries) {
+                    var statusDict = {"queued":0,"running":0,"killed":0,"completed":0,"total":0};
+                    //console.log(entries);
+                    for (var i = 0; i < entries.length; i++) {
+                        //console.log(entries[i])
+                        drawRow(entries[i]);
+                        statusDict[entries[i].status]++;
+                        statusDict["total"]++;
+                    }
+                
+                    drawStatusDiv(statusDict);
+                
+                }
+                
+                function drawStatusDiv(statusDict){
+                    q = statusDict["queued"];
+                    r = statusDict["running"];
+                    c = statusDict["completed"];
+                    k = statusDict["killed"];
+                    t = statusDict["total"];
+                    if (c+k!=t){
+                        $("#statusBar").append(drawStatusBar(q,r,c,k,t));
+                        //countdown(60);
+                        // progressBar();
+                            $('head').append('<meta http-equiv="refresh" content="300">');
+                        }
+                }
+                
+                function drawRow(rowData) {
+                    //console.log(rowData);
+                    var row = $("<tr />")
+                    $("#mainTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+                    logLink = "#"
+                    jsonLink = "#"
+                    if (rowData.status == "completed"){
+                        logLink = "/codost_out/" + ID + "/CDvist_" + ID + "." + rowData.num + ".log"
+                        jsonLink = "/codost_out/" + ID + "/_" + rowData.num + ".json"
+                        }
+                    row.append($("<td><a style='text-decoration:none' href='" + logLink + "' download>"  + "o" + "</a></td>"));
+                    row.append($("<td><a style='text-decoration:none' href='" + jsonLink + "' download>"  + rowData.header + "</a></td>"));
+                    //console.log(rowData.status);
+                    
+                    if (ALIGNMENTmode == "1"){
+                        rowData["fullsequence"] = aliData[rowData["num"]]
+                        }
+                    row.append($("<td>" + drawall(rowData,1) + "</td>"));
+                }
+            
+    
+                function countdown(remaining) {
+                    if(remaining === 0)
+                    location.reload(true);
+                    document.getElementById('countdown').innerHTML = remaining;
+                    setTimeout(function(){ countdown(remaining - 1); }, 1000);
+                }
+    
+    
+                
+            </script>
+    
+            <script>
+                $(window).load(function(){  
+                    myreset();
+                });
+            </script>
+        </body>

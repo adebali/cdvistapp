@@ -1,0 +1,204 @@
+<html>
+    <body>
+    </body>
+</html>
+
+<script src="js/d3/d3.min.js"></script>
+<script src="frontDomain.js"></script>
+<script>
+
+
+    let dataFile = 'dataSet.json'
+    let data
+    
+    // Constants 
+    let kSvgHeight = 100
+    let kBackboneHeight = 10
+    let kDomainHeight = 40
+    let kDomainStrokeWidth = 3
+    let kPartialPixel = 3
+    let kTransmembraneHeight = 50
+    let kCoilsHeight = 45
+    let kLcrHeight = 45
+    let kDomainTextMargin = 5
+    let kNameLengthToPixelFactor = 10
+    let kFontFamily = "Verdana"
+    let kFontSize = 18
+    let domainColors = {
+        "domain"        : "rgba(255,255,255,0.8)",
+        "domainStroke"  : "rgba(0,0,0,0.8)",
+        "tm"            : "rgba(100,100,100,0.7)",
+        "coils"         : "rgba(46,139,87,0.7)",
+        "lcr"           : "rgba(199,21,133,0.7)"
+    }
+
+    // Computed constants
+    let kMiddleY = kSvgHeight / 2
+    let kBackboneYstart = kMiddleY - (kBackboneHeight/2)
+    let kDomainYstart = kMiddleY - (kDomainHeight/2)
+    let kDomainYend = kMiddleY + (kDomainHeight/2)
+    let kTransmembraneYstart = kMiddleY - (kTransmembraneHeight/2)
+    let kCoilsYstart = kMiddleY - (kCoilsHeight/2)
+    let kLcrYstart = kMiddleY - (kLcrHeight/2)
+
+    function domainBorder(d, coverage = '[]') {
+        partialPixelLeft = coverage[0] === '[' ? 0 : kPartialPixel
+        partialPixelRight = coverage[1] === ']' ? 0 : kPartialPixel
+        let kQuarterDomainHeight = kDomainHeight/4
+
+        pathList = [ 
+            { "x": d.start, "y": kDomainYstart},
+            { "x": d.end, "y": kDomainYstart},
+            { "x": d.end - partialPixelRight, "y": kDomainYstart + kQuarterDomainHeight},
+            { "x": d.end, "y": kDomainYstart + kQuarterDomainHeight*2},
+            { "x": d.end - partialPixelRight, "y": kDomainYstart + kQuarterDomainHeight*3},
+            { "x": d.end, "y": kDomainYstart + kDomainHeight},
+            { "x": d.start, "y": kDomainYend},
+            { "x": d.start + partialPixelLeft, "y": kDomainYend - kQuarterDomainHeight},
+            { "x": d.start, "y": kDomainYend - kQuarterDomainHeight*2},
+            { "x": d.start + partialPixelLeft, "y": kDomainYend - kQuarterDomainHeight*3},
+            { "x": d.start, "y": kDomainYend - kDomainHeight}
+        ]
+        let path =  ' M ' + pathList[0].x + ' ' + pathList[0].y + 
+                    ' L ' + pathList[1].x + ' ' + pathList[1].y +
+                    ' L ' + pathList[2].x + ' ' + pathList[2].y +
+                    ' L ' + pathList[3].x + ' ' + pathList[3].y +
+                    ' L ' + pathList[4].x + ' ' + pathList[4].y + 
+                    ' L ' + pathList[5].x + ' ' + pathList[5].y + 
+                    ' L ' + pathList[6].x + ' ' + pathList[6].y + 
+                    ' L ' + pathList[7].x + ' ' + pathList[7].y + 
+                    ' L ' + pathList[8].x + ' ' + pathList[8].y + 
+                    ' L ' + pathList[9].x + ' ' + pathList[9].y + 
+                    ' L ' + pathList[10].x + ' ' + pathList[10].y +
+                    ' Z'
+        return path
+    }
+
+
+    d3.json(dataFile, function(error, json) {
+        if (error) return console.warn(error)
+        data = json
+
+        // Create a table
+        let row = d3.select('body')
+            .append('table')
+            .selectAll()
+            .data(data)
+            .enter()
+            .append('tr')
+
+        // First column to place name
+        let nameColum = row.append('td')
+            .append('p')
+            .style('font-family', kFontFamily)
+            .style('font-size', kFontSize)
+            .text(function(d) { return d.name ? d.name : ''})
+
+        // Second column for the main architecture SVG
+        let architecture = row.append('td')
+            .append('svg')
+            .attr("height", kSvgHeight)
+            .attr("width", function(d) {return d.length ? d.length : 0 + 1})
+            .append('g')
+        
+        // Draw backbone
+        architecture.append('g')
+            .filter(function(d){ return d.length && d.length>0 })
+            .append('rect')
+            .attr("x", 1)
+            .attr("y", kBackboneYstart)
+            .attr("width", function(d) { return d.length})
+            .attr("height", kBackboneHeight)
+            .attr("fill", "gray")
+
+        architecture.each(function(d, i) {
+
+            // Draw coiled coils
+            let coils = d3.select(this).selectAll('svg')
+                .data(d.coils ? d.coils:[])
+                .enter()
+                .append('g')
+                .filter(function(d){ return d.end - d.start > 0 })                
+                .append('rect')
+                .attr("x", function(d) { return d.start })
+                .attr("y", kCoilsYstart)
+                .attr("width", function(d) { 
+                    return d.end-d.start
+                })
+                .attr("height", kCoilsHeight)
+                .attr("fill", domainColors.coils)
+
+            // Draw coiled low-complexity regions
+            let lcr = d3.select(this).selectAll('svg')
+                .data(d.lcr ? d.lcr:[])
+                .enter()
+                .append('g')
+                .filter(function(d){ return d.end - d.start > 0 })
+                .append('rect')
+                .attr("x", function(d) { return d.start })
+                .attr("y", kLcrYstart)
+                .attr("width", function(d) { 
+                    return d.end-d.start
+                })
+                .attr("height", kLcrHeight)
+                .attr("fill", domainColors.lcr)
+
+            // Draw transmembrane regions
+            let tm = d3.select(this).selectAll('svg')
+                .data(d.tm ? d.tm:[])
+                .enter()
+                .append('g')
+                .append('rect')
+                .filter(function(d){ return d.end - d.start > 0 })
+                .attr("x", function(d) { return d.start })
+                .attr("y", kTransmembraneYstart)
+                .attr("width", function(d) { 
+                    return d.end-d.start
+                })
+                .attr("height", kTransmembraneHeight)
+                .attr("fill", domainColors.tm)
+
+
+            // Draw protein domains
+            let domain = d3.select(this).selectAll('svg')
+                .data(d.domains ? filterOverlappingHits(d.domains, 'score') : [])
+                .enter()
+                .append('g')
+                .filter(function(d){ return d.start && d.end && (d.end - d.start > 0) })
+
+            domain.append('rect')
+                // .filter(function(d){ return d.end - d.start > 0 })
+                .attr("x", function(d) { return d.start })
+                .attr("y", kDomainYstart)
+                .attr("width", function(d) { 
+                    return d.end-d.start
+                })
+                .attr("height", kDomainHeight)
+                .attr("fill", domainColors.domain)
+                .attr("stroke", domainColors.domainStroke)
+                .attr("stroke-width", 0)
+            
+            // Draw domain borders
+            domain.append('path')
+                // .filter(function(d){ return d.end - d.start > 0 })
+                .attr("d", function(d) { return domainBorder(d, d.coverage ? d.coverage : '[]') })
+                .attr("stroke", domainColors.domainStroke)
+                .attr("stroke-width", kDomainStrokeWidth)
+                .attr("fill", "none")
+                .attr("stroke-linecap", "round")
+
+            // Name the domain
+            domain.append('text')
+                .filter(function(d){ return d.name })
+                .attr("x", function(d) {return (d.start+d.end)/2 })
+                .attr("y", kMiddleY)
+                .attr("text-anchor", "middle")
+                .attr("alignment-baseline", "central")
+                .attr("textLength", function(d) { return Math.min(d.name.length*kNameLengthToPixelFactor, d.end-d.start-(kDomainTextMargin*2)) })
+                .attr("font-family", kFontFamily)
+                .attr("font-size", kFontSize)
+                .attr("lengthAdjust", "spacingAndGlyphs")
+                .text(function(d) { return d.name})
+        })
+    })
+</script>

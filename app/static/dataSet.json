@@ -1,0 +1,65 @@
+[
+    {
+        "length":200,
+        "name": "my protein",
+        "domains": [
+            {"name": "PAS", "start": 40, "end": 120, "coverage": ".]", "score": 1},
+            {"name": "PAS_2", "start": 50, "end": 130, "coverage": ".]", "score": 2},
+            {"name": "PAS_3", "start": 30, "end": 70, "coverage": ".]", "score": 3},
+            {"name": "PAS_4", "start": 50, "end": 70, "coverage": ".]", "score": 4},
+            {"name": "PAS_4", "start": 30, "end": 130, "coverage": ".]", "score": 5},
+            {"name": "MCP_signal", "start": 149, "end": 190, "coverage": "[.", "score": 1}
+        ],
+        "tm": [
+            {"start": 23, "end": 43},
+            {"start": 73, "end": 89}
+        ],
+        "coils": [
+            {"start": 55, "end": 63},
+            {"start": 96, "end": 112}
+        ],
+        "lcr": [
+            {"start": 15, "end": 22},
+            {"start": 115, "end": 125}
+        ]
+    },
+    {
+        "length":200,
+        "name": "my protein",
+        "domains": [
+            {"name": "PAS", "start": 40, "end": 120, "coverage": ".]", "score": 1},
+            {"name": "MCP_signal", "start": 149, "end": 190, "coverage": "[.", "score": 1}
+        ],
+        "tm": [
+            {"start": 23, "end": 43},
+            {"start": 73, "end": 89}
+        ],
+        "coils": [
+            {"start": 55, "end": 63},
+            {"start": 96, "end": 112}
+        ],
+        "lcr": [
+            {"start": 15, "end": 22},
+            {"start": 115, "end": 125}
+        ]
+    },
+    {
+        "length":300,
+        "domains": [
+            {"name": "Response_reg", "start": 75, "end": 120, "coverage": "..", "score": 1},
+            {"name": "CheW", "start": 160, "end": 230, "score": 1},
+            {"name": "CheW", "start": 0, "end": 0, "score": 1}
+        ]
+    },
+    {
+        "length": 250
+    },
+    {},
+    {
+        "length": 540,
+        "tm": [
+            {"start":10, "end":20},
+            {"start":30, "end":30}
+        ]
+    }
+]

@@ -1,0 +1,22 @@
+td {
+    margin:0;
+    border:0px; 
+    border-top-width:0px; 
+    white-space:nowrap;
+}
+
+.headcol {
+    position:absolute; 
+    width:5em; 
+    left:0;
+    top:auto;
+}
+.long { background:yellow; letter-spacing:1em; }
+.mydiv { 
+            width: 100% - 0px; 
+            overflow-x:scroll;  
+            margin-left:5em; 
+            overflow-y:visible;
+            padding-bottom:1px;
+        }
+.mytable { border-collapse:separate; border-top: 3px solid grey; }

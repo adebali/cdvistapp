@@ -1,0 +1,128 @@
+:root{
+--main-color: #78D5E3
+}
+
+#maincolor
+{
+color:#2bb5cf;
+}
+a{text-decoration: none;}
+a:link {color:black;}
+a:visited {color:black;}
+a:hover {color: var(--main-color);
+
+}
+body{
+color:#333;
+font-family: sans-serif;
+}
+p{margin-bottom: 2px;
+margin-top: 2px;}
+#Ztitle
+{
+color:#2bb5cf;
+font-weight: bold;
+font-family: sans-serif;
+font-size:40px;
+}
+#Zh2
+{
+color:#2bb5cf;
+font-weight: bold;
+font-family: sans-serif;
+font-size:30px;
+}
+#header
+{
+top: 0;
+display:block;
+background: white;
+}
+#header.fixed
+{
+position:fixed; 
+top: 0;  /*fixing it at the top*/
+z-index: 999;  /* over any other element*/
+}	
+.firstrow
+{
+font-family: arial;
+padding: 0px 0px;
+cursor: pointer;
+font-size: 15px;
+
+}
+.secondrow
+{
+vertical-align: top;
+}
+.buttonon
+{
+color: rgba(141, 131, 131, 1);
+}
+.buttonoff
+{
+color: rgba(29, 27, 27, 1);
+}
+.dropdown 
+{
+color: rgba(141, 131, 131, 1);
+margin: 0 0 0 0;
+width: 143px;
+position: relative;
+height: 17.5px;
+text-align:left;
+}
+.submenu
+{
+background: #fff;
+position: absolute;
+top: 0px;
+left: 0px;
+z-index: 100;
+width: 90px;
+display: none;
+margin-left: 0px;
+padding: 30px 0 0px;
+border-radius: 1px;
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+}
+.dropdown li a 
+{
+color: #555555;
+display: block;
+font-family: arial;
+padding: 2px 5px;
+cursor: pointer;
+text-decoration:none;
+}
+
+.dropdown li a:hover
+{
+background:#2bb5cf;
+color: #FFFFFF;
+text-decoration: none;
+}
+a.download
+{
+font-family: arial;
+font-weight: bold;
+
+cursor: pointer;
+
+
+position: absolute;
+z-index: 110;
+text-decoration: none;
+cursor:pointer;
+}
+.root
+{
+list-style:none;
+margin:0px;
+padding:0px;
+font-size: 11px;
+padding: 5px 0 0 0px;
+border-top:1px solid #dedede;
+}
+

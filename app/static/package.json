@@ -1,0 +1,14 @@
+{
+  "name": "cdvist-node",
+  "version": "1.0.0",
+  "description": "js component of CDvist python application",
+  "main": "dad.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ogun Adebali",
+  "license": "ISC",
+  "dependencies": {
+    "html-to-pdf": "^0.1.11"
+  }
+}
