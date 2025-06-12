@@ -2,7 +2,7 @@
 FROM ubuntu:24.04
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        git libc6 python3.12 python3.12-venv python3.12-dev python3-pip \
+        git libc6 python3.12 python3.12-venv python3.12-dev python3-pip redis-tools \
         build-essential cmake wget curl ca-certificates gnupg \
     && rm -rf /var/lib/apt/lists/*
 
@@ -23,7 +23,7 @@ RUN $VIRTUAL_ENV/bin/pip install --upgrade pip && \
     $VIRTUAL_ENV/bin/pip install --no-cache-dir -r /tmp/requirements.txt && \
     rm /tmp/requirements.txt
 
-ENV PYTHONPATH="$VIRTUAL_ENV/lib/python3.12/site-packages:/cdvistapp/app/lib"
+ENV PYTHONPATH="$VIRTUAL_ENV/lib/python3.12/site-packages:/cdvistapp/app/lib:/cdvistapp/app"
 
 # ---------- install bioinformatics tools ----------
 # Install HMMER

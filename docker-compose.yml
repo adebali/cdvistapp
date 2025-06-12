@@ -8,10 +8,14 @@ services:
       - "5001:5000"
     env_file:
       - .env
+    environment:
+      - REDIS_HOST=redis
     depends_on:
       - redis
     volumes:
       - .:/cdvist
+    networks:
+      - app_network
 
   celery:
     build: .
@@ -19,15 +23,27 @@ services:
     command: celery -A app.celery worker --loglevel=info
     env_file:
       - .env
+    environment:
+      - REDIS_HOST=redis
     depends_on:
       - redis
     volumes:
       - .:/cdvist
+    networks:
+      - app_network
 
   redis:
     image: redis:7.2
     container_name: redis
     env_file:
       - .env
+    environment:
+      - REDIS_HOST=redis
     ports:
       - "6379:6379"
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

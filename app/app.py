@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify
 from celery import Celery
 from celery.result import AsyncResult
@@ -7,12 +8,17 @@ from .tasks import long_task  # import tasks here
 
 
 def make_celery(app):
+    redis_host = os.getenv('REDIS_HOST', 'redis')
+    redis_url = f'redis://{redis_host}:6379/0'
     celery = Celery(
         app.import_name,
-        backend='redis://redis:6379/0',
-        broker='redis://redis:6379/0'
+        backend=redis_url,
+        broker=redis_url
     )
     celery.conf.update(app.config)
+    celery.conf.update({
+        'broker_connection_retry_on_startup': True  # Retain retry behavior during startup
+    })
     celery.autodiscover_tasks(['app'])
     return celery
 
@@ -61,3 +67,6 @@ def task_result(task_id):
         return f"Result: {result.result}"
     else:
         return "Task is still running. Please check back later."
+    
+if __name__ == '__main__':
+    app.run()
