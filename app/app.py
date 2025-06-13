@@ -76,7 +76,8 @@ def check_status(id):
     if res.state!=states.SUCCESS:
         if res.state == "PROGRESS" or res.state == "PENDING":
             print(res)
-            return json.dumps({"job":res.info['job'], "state":res.state, "current":res.info['current'], "total": res.info["total"], "toolIndex": res.info["toolIndex"], "totalTool": res.info["totalTool"]})
+            # return json.dumps({"job":res.info['job'], "state":res.state, "current":res.info['current'], "total": res.info["total"], "toolIndex": res.info["toolIndex"], "totalTool": res.info["totalTool"]})
+            return json.dumps({"job":res.info['job'], "state":res.state, "current":res.info['current'], "total": res.info["total"], "toolIndex": res.info["toolIndex"]})
         return json.dumps({"state": res.state})
     else:
         return json.dumps({"job":"", "state":res.state, "current":0, "total": 0, "toolIndex": 0, "totalTool": 0})     
@@ -161,13 +162,13 @@ def root():
                 'checked': checkFormInput('deeptmhmm'),
                 'status': 'not processed'
             },
-            # {
-            #     'name': 'hmmer3',
-            #     'checked': checkFormInput('hmmer3'),
-            #     # 'db': 'pfam31.0',
-            #     'db': checkFormInput('hmmer3_db'),
-            #     'status': 'not processed'
-            # },
+            {
+                'name': 'hmmer3',
+                'checked': checkFormInput('hmmer3'),
+                # 'db': 'pfam31.0',
+                'db': checkFormInput('hmmer3_db'),
+                'status': 'not processed'
+            },
             # {
             #     'name': 'rpsblast',
             #     'checked': checkFormInput('rpsblast1'),
@@ -175,16 +176,16 @@ def root():
             #     'gap_length': int(checkFormInput('rps_gap1')),
             #     'status': 'not processed'
             # },
-            # getRpsblastField(1),
-            # getRpsblastField(2),
-            # getRpsblastField(3),
-            # getRpsblastField(4),
-            # getRpsblastField(5),
-            # getHHsearchField(1),
-            # getHHsearchField(2),
-            # getHHsearchField(3),
-            # getHHsearchField(4),
-            # getHHsearchField(5)
+            getRpsblastField(1),
+            getRpsblastField(2),
+            getRpsblastField(3),
+            getRpsblastField(4),
+            getRpsblastField(5),
+            getHHsearchField(1),
+            getHHsearchField(2),
+            getHHsearchField(3),
+            getHHsearchField(4),
+            getHHsearchField(5)
         ]
 
         onlyCheckedTools = []

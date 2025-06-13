@@ -48,10 +48,11 @@ cpu = config['parameters']['cpu']
 #     updatedRequest = parsers.tmhmm(requestJson, outputFile, toolIndex)
 #     return updatedRequest
 
+
+
 def runDeepTMHMM(requestJson, toolIndex, CELERY_MODE=False):
-    totalToolNum = len(requestJson['tools'])
     if CELERY_MODE:
-        current_task.update_state(state='PROGRESS', meta={'job': 'TMHMM', 'current': 0, 'total': 1, 'toolIndex': toolIndex, 'totalTool': totalToolNum})
+        current_task.update_state(state='PROGRESS', meta={'job': 'TMHMM', 'current': 0, 'total': 1, 'toolIndex': toolIndex})
 
     import biolib
     application_name = 'DTU/DeepTMHMM:1.0.24'
@@ -79,7 +80,6 @@ def rpsblast_execute(inputFile, outputFile, toolJob, **kwargs):
     dbObject = config['databases']['rps-cdd'][versionToUse]
     bitscoreFile = os.path.join(dbObject['location'], 'bitscore_specific_' + dbObject['name'] + '.txt')
     requestedDb = dbObject[toolJob['db']]
-    rpsblastScript = config['tools']['rpsblast']
     logFile = outputFile + '.log'
     errorFile = outputFile + '.err'
 
@@ -284,6 +284,10 @@ def zipAccessories(jobId, extensions = []):
 
 def runTool(requestJson, toolIndex, CELERY_MODE=False):
     toolJob = requestJson['tools'][toolIndex]
+    totalToolNum = len(requestJson['tools'])
+    if CELERY_MODE:
+        current_task.update_state(state='PROGRESS', meta={'job': 'counting', 'current': 0, 'total': totalToolNum, 'toolIndex': 0, 'totalTool': totalToolNum})
+
     # if toolJob['name'] == 'tmPrediction':
     #     toolJob = runTmPrediction(filename, toolJob)
     if toolJob['name'] == 'DeepTMHMM':
