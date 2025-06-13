@@ -48,6 +48,13 @@ RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast
     mv /tmp/ncbi-blast*/bin/* /usr/local/bin/ && \
     rm -rf /tmp/blast*
 
+
+# ---------- Install Docker CLI manually ----------
+RUN curl -L https://download.docker.com/linux/static/stable/x86_64/docker-24.0.7.tgz -o docker.tgz && \
+    tar xzvf docker.tgz && \
+    mv docker/docker /usr/bin/docker && \
+    rm -rf docker docker.tgz
+
 WORKDIR /cdvist
 
 CMD ["flask", "run", "--host=0.0.0.0"]

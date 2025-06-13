@@ -3,7 +3,7 @@
 import os
 import sys
 import json
-with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json'), 'r') as f:
+with open(os.path.join('/cdvist', 'app', 'config.json'), 'r') as f:
     config = json.load(f)
 import utils
 import parsers
@@ -23,29 +23,48 @@ cpu = config['parameters']['cpu']
 #     finishedToolJson = parsers.tmPrediction(outFilename, toolJob)
 #     return finishedToolJson
 
-def runTmhmm(requestJson, toolIndex, CELERY_MODE=False):
+# def runTmhmm(requestJson, toolIndex, CELERY_MODE=False):
+#     totalToolNum = len(requestJson['tools'])
+#     if CELERY_MODE:
+#         current_task.update_state(state='PROGRESS', meta={'job': 'TMHMM', 'current': 0, 'total': 1, 'toolIndex': toolIndex, 'totalTool': totalToolNum})
+
+#     tmhmmScript = config['tools']['tmhmm']
+#     toolJob = requestJson['tools'][toolIndex]
+#     jobId = requestJson['id']    
+#     outputFile = utils.jobId2filePath(jobId, 'tmhmm.txt')
+#     logFile = outputFile + '.log'
+#     errorFile = outputFile + '.err'
+
+#     codeList = [
+#         tmhmmScript,
+#         '-short -noplot',
+#         utils.jobId2fasta(jobId),
+#         '>',
+#         outputFile,
+#         '2>', errorFile
+#     ]
+#     utils.runCode(codeList)
+#     requestJson['tools'][toolIndex]['status'] = 'completed'
+#     updatedRequest = parsers.tmhmm(requestJson, outputFile, toolIndex)
+#     return updatedRequest
+
+def runDeepTMHMM(requestJson, toolIndex, CELERY_MODE=False):
     totalToolNum = len(requestJson['tools'])
     if CELERY_MODE:
         current_task.update_state(state='PROGRESS', meta={'job': 'TMHMM', 'current': 0, 'total': 1, 'toolIndex': toolIndex, 'totalTool': totalToolNum})
 
-    tmhmmScript = config['tools']['tmhmm']
-    toolJob = requestJson['tools'][toolIndex]
-    jobId = requestJson['id']    
-    outputFile = utils.jobId2filePath(jobId, 'tmhmm.txt')
-    logFile = outputFile + '.log'
-    errorFile = outputFile + '.err'
+    import biolib
+    application_name = 'DTU/DeepTMHMM:1.0.24'
+    app = biolib.load(application_name)
+    input_file = utils.jobId2fasta(requestJson['id'])
+    result = app.cli(args=f'--fasta {input_file}', machine='local')
+    output_dir = os.path.join(config['jobRoot'], jobId, 'deepTMHMM_results')
+    result.save_files(output_dir)
 
-    codeList = [
-        tmhmmScript,
-        '-short -noplot',
-        utils.jobId2fasta(jobId),
-        '>',
-        outputFile,
-        '2>', errorFile
-    ]
-    utils.runCode(codeList)
+    jobId = requestJson['id']    
+    outputFile = os.path.join(output_dir, 'TMRs.gff3')
     requestJson['tools'][toolIndex]['status'] = 'completed'
-    updatedRequest = parsers.tmhmm(requestJson, outputFile, toolIndex)
+    updatedRequest = parsers.deepTMHMM(requestJson, outputFile, toolIndex)
     return updatedRequest
 
 def rpsblast_execute(inputFile, outputFile, toolJob, **kwargs):
@@ -61,7 +80,7 @@ def rpsblast_execute(inputFile, outputFile, toolJob, **kwargs):
     errorFile = outputFile + '.err'
 
     codeList = [
-        rpsblastScript,
+        'rpsblast',
         '-num_threads', cpu,
         '-db', requestedDb,
         '-query', inputFile,
@@ -136,7 +155,7 @@ def runHmmer(requestJson, toolIndex, CELERY_MODE=False):
     errorFile = outputFile + '.err'
 
     codeList = [
-        config['tools'][toolJob['name']],
+        'hmmscan',
         '-o', outputFile,
         '--cpu', cpu,
         config['databases']['hmmer-pfam'][requestedDb]['location'],
@@ -156,7 +175,7 @@ def hhblits_execute(inputFile, outputFile, toolJob, **kwargs):
         return True
     hhblits_db_keyword = toolJob['hhblits_db']
     db_location = config['databases']['uniclust'][hhblits_db_keyword]['location']
-    hhblits_code = config['tools']['hhblits']
+    hhblits_code = 'hhblits'
     logFile = outputFile + '.log'
     errorFile = outputFile + '.err'
     codeList = [
@@ -176,7 +195,7 @@ def hhsearch_execute(inputFile, outputFile, toolJob, **kwargs):
         current_task.update_state(state='PROGRESS', meta=kwargs.get('meta', {}))
     hhsearch_db_keyword = toolJob['db']
     db_location = config['databases']['hhsuite'][hhsearch_db_keyword]['location']
-    hhsearch_code = config['tools']['hhsearch']
+    hhsearch_code = 'hhsearch'
     logFile = outputFile + '.log'
     errorFile = outputFile + '.err'
     codeList = [
@@ -204,8 +223,8 @@ def hhblits_hhsearch_iterate(requestJson, toolIndex, CELERY_MODE=False):
     jobId = requestJson['id']
     currentEntries = copy.deepcopy(requestJson['entries'])
     updatedEntries =[]
-    i = 262
-    for proteinObject in currentEntries[i:]:
+    i = 0
+    for proteinObject in currentEntries:
         i += 1
         def hhblits_hhsearch(subSequence, segment, toolJob):
             interval = str(segment['start']) + '-' + str(segment['end'])
@@ -265,7 +284,7 @@ def runTool(requestJson, toolIndex, CELERY_MODE=False):
     #     toolJob = runTmPrediction(filename, toolJob)
     if toolJob['name'] == 'tmhmm':
         if toolJob['checked']:
-            return runTmhmm(requestJson, toolIndex, CELERY_MODE)
+            return runDeepTMHMM(requestJson, toolIndex, CELERY_MODE)
         return requestJson
     
     if toolJob['name'] == 'hmmer3':
@@ -290,6 +309,7 @@ def runTool(requestJson, toolIndex, CELERY_MODE=False):
 def runPipeline(requestJson, CELERY_MODE=False):
     toolIndex = 0
     tools = requestJson['tools']
+    print(tools)
     for tool in tools:
         if tool['status'] == 'not processed':
             requestJson = runTool(requestJson, toolIndex, CELERY_MODE)
@@ -303,6 +323,11 @@ def runPipeline(requestJson, CELERY_MODE=False):
 # with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'static', 'job', 'fasta', '171005_magodam', 'request.json'), 'r') as f:
 #     requestJson = json.load(f)
 #     runPipeline(requestJson)
+
+if __name__ == "__main__":
+    with open(sys.argv[1], 'r') as f:
+        requestJson = json.load(f)
+        runPipeline(requestJson)
 
 if __name__ == "__main__":
     with open(sys.argv[1], 'r') as f:

@@ -3,3 +3,5 @@
 # Except this file
 !.gitignore
 !000000_test/*
+!fasta
+!json

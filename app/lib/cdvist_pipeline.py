@@ -48,6 +48,29 @@ cpu = config['parameters']['cpu']
 #     updatedRequest = parsers.tmhmm(requestJson, outputFile, toolIndex)
 #     return updatedRequest
 
+def runDeepTMHMM(requestJson, toolIndex, CELERY_MODE=False):
+    totalToolNum = len(requestJson['tools'])
+    if CELERY_MODE:
+        current_task.update_state(state='PROGRESS', meta={'job': 'TMHMM', 'current': 0, 'total': 1, 'toolIndex': toolIndex, 'totalTool': totalToolNum})
+
+    import biolib
+    application_name = 'DTU/DeepTMHMM:1.0.24'
+    app = biolib.load(application_name)
+    input_file = utils.jobId2fasta(requestJson['id'])
+    print(f"Running DeepTMHMM on input file: {input_file}")
+    if not os.path.isfile(input_file):
+        raise FileNotFoundError(f"Input file {input_file} does not exist.")
+    # result = app.cli(args=f'--fasta {input_file}', machine='local')
+    result = app.cli(args=f'--fasta {input_file}')
+    output_dir = os.path.join(config['jobRoot'], jobId, 'deepTMHMM_results')
+    result.save_files(output_dir)
+
+    jobId = requestJson['id']    
+    outputFile = os.path.join(output_dir, 'TMRs.gff3')
+    requestJson['tools'][toolIndex]['status'] = 'completed'
+    updatedRequest = parsers.deepTMHMM(requestJson, outputFile, toolIndex)
+    return updatedRequest
+
 def rpsblast_execute(inputFile, outputFile, toolJob, **kwargs):
     if kwargs.get('CELERY_MODE', False):
         current_task.update_state(state='PROGRESS', meta=kwargs.get('meta', {}))
@@ -263,9 +286,9 @@ def runTool(requestJson, toolIndex, CELERY_MODE=False):
     toolJob = requestJson['tools'][toolIndex]
     # if toolJob['name'] == 'tmPrediction':
     #     toolJob = runTmPrediction(filename, toolJob)
-    if toolJob['name'] == 'tmhmm':
+    if toolJob['name'] == 'DeepTMHMM':
         if toolJob['checked']:
-            return runTmhmm(requestJson, toolIndex, CELERY_MODE)
+            return runDeepTMHMM(requestJson, toolIndex, CELERY_MODE)
         return requestJson
     
     if toolJob['name'] == 'hmmer3':
@@ -290,13 +313,14 @@ def runTool(requestJson, toolIndex, CELERY_MODE=False):
 def runPipeline(requestJson, CELERY_MODE=False):
     toolIndex = 0
     tools = requestJson['tools']
+    print(tools)
     for tool in tools:
         if tool['status'] == 'not processed':
             requestJson = runTool(requestJson, toolIndex, CELERY_MODE)
             utils.writeRequest(requestJson)
         toolIndex += 1
-    zipAccessories(requestJson['id'], ['txt', 'a3m', 'hhr', 'log', 'err', 'fa'])
     if CELERY_MODE:
+        zipAccessories(requestJson['id'], ['txt', 'a3m', 'hhr', 'log', 'err', 'fa'])
         current_task.update_state(state='SUCCESS')
     return requestJson
 

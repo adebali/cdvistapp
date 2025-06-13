@@ -30,15 +30,14 @@ def make_celery(app):
     return celery
 
 app = Flask(__name__, template_folder="static")
-app.config['UPLOAD_FOLDER'] = '/flask-app/static/job/fasta'
-app.config['ALLOWED_EXTENSIONS'] = set(['.fa', '.fasta', '.txt'])
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'static', 'job', 'fasta')
 app.secret_key = "super_secret_key"
 
 celery = make_celery(app)
 
-@app.route('/')
-def index():
-    return '<a href="/start-task">Start Task</a>'
+# @app.route('/')
+# def index():
+#     return '<a href="/start-task">Start Task</a>'
 
 @app.route('/start-task')
 def start_task():
@@ -158,8 +157,8 @@ def root():
             return "No input specified."
         tools = [
             {
-                'name': 'deepTMHMM',
-                'checked': checkFormInput('deepTMHMM'),
+                'name': 'DeepTMHMM',
+                'checked': checkFormInput('deeptmhmm'),
                 'status': 'not processed'
             },
             # {

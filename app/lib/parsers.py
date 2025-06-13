@@ -16,6 +16,22 @@ def tmhmm(requestJson, filename, toolIndex):
         i += 1
     return requestJson
 
+def deepTMHMM(requestJson, filename, toolIndex):
+    from deepTMHMM_gff3_parser import deepTMHMM
+    toolJob = requestJson['tools'][toolIndex]
+    output = deepTMHMM(filename)
+    queries = output
+
+    i = 0
+    for protein in queries:
+        usedDomains = []
+        for domain in protein['domains']:
+            if domain['name'] == 'TMhelix':
+                usedDomains.append(domain)
+        requestJson['entries'][i]['tm'] = usedDomains
+        i += 1
+    return requestJson
+
 def hmmer(requestJson, filename, toolIndex):
     from hmmscan_parser import HmmscanResult
     toolJob = requestJson['tools'][toolIndex]

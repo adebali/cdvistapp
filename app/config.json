@@ -87,7 +87,7 @@
             }
         }
     },
-    "jobRoot": "/cdvist/static/job/fasta",
+    "jobRoot": "/cdvist/app/static/job/fasta",
     "parameters": {
         "cpu": 8
     }
