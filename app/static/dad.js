@@ -428,8 +428,25 @@ function drawFromData(data) {
             .attr("fill", domainColors.lcr)
 
         // Draw transmembrane regions
-        let tm = d3.select(this).selectAll('svg')
-            .data(d.tm ? d.tm:[])
+        // let tm = d3.select(this).selectAll('svg')
+        //     .data(d.tm ? d.tm:[])
+        //     .enter()
+        //     .append('g')
+        //     .attr('class', 'tm')
+        //     .append('rect')
+        //     .filter(function(d){ return d[1] - d[0] > 0 })
+        //     .attr("x", function(d) { return d[0] })
+        //     .attr("y", kTransmembraneYstart)
+        //     .attr("width", function(d) { 
+        //         return d[1]-d[0]
+        //     })
+        //     .attr("height", kTransmembraneHeight)
+        //     .attr("fill", domainColors.tm)
+
+        let tmr = d3.select(this).selectAll('svg')
+            // .data(d.tm.domains[0] || [])
+            .data(Array.isArray(d.tm) && d.tm[0] ? d.tm[0].domains : [])
+            // .data(d.domains)
             .enter()
             .append('g')
             .attr('class', 'tm')
@@ -442,8 +459,7 @@ function drawFromData(data) {
             })
             .attr("height", kTransmembraneHeight)
             .attr("fill", domainColors.tm)
-
-
+        
         // Draw protein domains
         let domain = d3.select(this).selectAll('svg')
             .data(d.segments.assigned)

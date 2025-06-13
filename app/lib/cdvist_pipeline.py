@@ -56,7 +56,8 @@ def runDeepTMHMM(requestJson, toolIndex, CELERY_MODE=False):
     import biolib
     application_name = 'DTU/DeepTMHMM:1.0.24'
     app = biolib.load(application_name)
-    input_file = utils.jobId2fasta(requestJson['id'])
+    jobId = requestJson['id']    
+    input_file = utils.jobId2fasta(jobId)
     print(f"Running DeepTMHMM on input file: {input_file}")
     if not os.path.isfile(input_file):
         raise FileNotFoundError(f"Input file {input_file} does not exist.")
@@ -65,7 +66,6 @@ def runDeepTMHMM(requestJson, toolIndex, CELERY_MODE=False):
     output_dir = os.path.join(config['jobRoot'], jobId, 'deepTMHMM_results')
     result.save_files(output_dir)
 
-    jobId = requestJson['id']    
     outputFile = os.path.join(output_dir, 'TMRs.gff3')
     requestJson['tools'][toolIndex]['status'] = 'completed'
     updatedRequest = parsers.deepTMHMM(requestJson, outputFile, toolIndex)

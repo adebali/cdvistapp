@@ -20,7 +20,7 @@ def deepTMHMM(requestJson, filename, toolIndex):
     from deepTMHMM_gff3_parser import deepTMHMM
     toolJob = requestJson['tools'][toolIndex]
     output = deepTMHMM(filename)
-    queries = output
+    queries = output.results
 
     i = 0
     for protein in queries:
