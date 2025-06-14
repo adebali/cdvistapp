@@ -5,41 +5,13 @@ import json
 import utils
 
 scriptDir = os.path.dirname(os.path.realpath(__file__))
-# vendorDir = os.path.join(scriptDir, '..', 'vendor')
-vendorDir = os.path.join('/vendor')
-toolDir = os.path.join(vendorDir, 'tools')
-dbDir = os.path.join(vendorDir, 'db')
+dbDir = os.path.join(scriptDir, '..', '..', 'db')
+fetchDB = os.path.join(scriptDir, 'fetchDB')
 
-with open(os.path.join(scriptDir, 'config.json'), 'r') as f:
+with open(os.path.join(scriptDir, '..', 'config.json'), 'r') as f:
     config = json.load(f)
 
 
-
-# The tools
-
-def hmmer3():
-    utils.runCode([
-        'bash',
-        os.path.join(vendorDir, 'install-hmmer3.sh'),
-        config['tools']['versionToInstall']['hmmer3'],
-        os.path.join(toolDir, 'hmmer3')
-        ])
-
-def hhsuite():
-    utils.runCode([
-        'bash',
-        os.path.join(vendorDir, 'install-hh-suite.sh'),
-        config['tools']['versionToInstall']['hhsuite'],
-        os.path.join(toolDir, 'hhsuite')
-        ])
-
-def blast():
-    utils.runCode([
-        'bash',
-        os.path.join(vendorDir, 'download-blast-tarball.sh'),
-        config['tools']['versionToInstall']['blast'],
-        os.path.join(toolDir, 'blast')
-        ])
 
 # Databases
 
@@ -47,7 +19,7 @@ def cdd():
     version = config['databases']['versionToInstall']['rps-cdd']
     utils.runCode([
         'bash',
-        os.path.join(vendorDir, 'download-cdd-pssm.sh'),
+        os.path.join(fetchDB, 'download-cdd-pssm.sh'),
         version,
         os.path.join(dbDir, 'cdd')
         ])
@@ -55,7 +27,7 @@ def cdd():
 def pfam():
     utils.runCode([
         'bash',
-        os.path.join(vendorDir, 'download-pfam-hmm.sh'),
+        os.path.join(fetchDB, 'download-pfam-hmm.sh'),
         config['databases']['versionToInstall']['hmmer-pfam'],
         os.path.join(dbDir, 'pfam')
         ])
@@ -69,7 +41,7 @@ def hhsuite_db(db_name):
     db_file = hhsuite_db_file('hhsearch', db_name)
     utils.runCode([
         'bash',
-        os.path.join(vendorDir, 'download-hh-suite-hhm.sh'),
+        os.path.join(fetchDB, 'download-hh-suite-hhm.sh'),
         db_file,
         os.path.join(dbDir, 'hh-suite')
         ])
@@ -83,7 +55,7 @@ def uniclust_db(db_name):
     db_file = uniclust_db_file('hhsearch', db_name)
     utils.runCode([
         'bash',
-        os.path.join(vendorDir, 'download-uniclust-hhm.sh'),
+        os.path.join(fetchDB, 'download-uniclust-hhm.sh'),
         db_file,
         os.path.join(dbDir, 'uniclust'),
         '&&',
@@ -93,9 +65,6 @@ def uniclust_db(db_name):
         ])
 
 def all():
-    hmmer3()
-    hhsuite()
-    blast()
     pfam()
     hhsuite_db('hh-pfam')
     hhsuite_db('hh-pdb')

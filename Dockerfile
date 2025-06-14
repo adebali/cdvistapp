@@ -43,17 +43,17 @@ RUN git clone https://github.com/soedinglab/hh-suite.git && \
 ENV PATH="/hh-suite/build/bin:/hh-suite/build/scripts:$PATH"
 
 # Install BLAST
-RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.16.0+-x64-linux.tar.gz -O /tmp/blast.tar.gz && \
+RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.16.0+-aarch64-linux.tar.gz -O /tmp/blast.tar.gz && \
     tar -xzf /tmp/blast.tar.gz -C /tmp && \
     mv /tmp/ncbi-blast*/bin/* /usr/local/bin/ && \
     rm -rf /tmp/blast*
 
 
-# ---------- Install Docker CLI manually ----------
-RUN curl -L https://download.docker.com/linux/static/stable/x86_64/docker-24.0.7.tgz -o docker.tgz && \
-    tar xzvf docker.tgz && \
-    mv docker/docker /usr/bin/docker && \
-    rm -rf docker docker.tgz
+# # ---------- Install Docker CLI manually ----------
+# RUN curl -L https://download.docker.com/linux/static/stable/x86_64/docker-24.0.7.tgz -o docker.tgz && \
+#     tar xzvf docker.tgz && \
+#     mv docker/docker /usr/bin/docker && \
+#     rm -rf docker docker.tgz
 
 WORKDIR /cdvist
 
