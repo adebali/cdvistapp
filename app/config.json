@@ -7,7 +7,7 @@
             "hh-scop": "scop",
             "uniclust20": "uniclust20",
             "uniclust30": "uniclust30",
-            "rps-cdd": "3.16"
+            "rps-cdd": "3.21"
         },
         "defaultVersion": {
             "hmmer-pfam": "30.0",
@@ -17,7 +17,7 @@
             "uniclust": "uniclust30_hhsuite",
             "uniclust20": "uniclust20",
             "uniclust30": "uniclust30",
-            "rps-cdd": "3.16"
+            "rps-cdd": "3.21"
         },
         "hmmer-pfam" : {
             "30.0": {

@@ -44,14 +44,24 @@ tar xzf "$TARGET_DIR/$GZ_CDD_PSSM_NAME" -C "$TARGET_DIR/cdd"
 
 
 cd $TARGET_DIR/cdd
-echo "Making profile (PSSM) databases of CDD, COG, KOG, Pfam, Prk, Smart, Tigr"
-makeprofiledb -title Cdd_NCBI -in Cdd_NCBI.pn -out ../Cdd_NCBI -threshold 9.82 -scale 100.0 -dbtype rps -index true
-makeprofiledb -title Cog -in Cog.pn -out ../Cog -threshold 9.82 -scale 100.0 -dbtype rps -index true
-makeprofiledb -title Kog -in Kog.pn -out ../Kog -threshold 9.82 -scale 100.0 -dbtype rps -index true
-makeprofiledb -title Pfam -in Pfam.pn -out ../Pfam -threshold 9.82 -scale 100.0 -dbtype rps -index true
-makeprofiledb -title Prk -in Prk.pn -out ../Prk -threshold 9.82 -scale 100.0 -dbtype rps -index true
-makeprofiledb -title Smart -in Smart.pn -out ../Smart -threshold 9.82 -scale 100.0 -dbtype rps -index true
-makeprofiledb -title Tigr -in Tigr.pn -out ../Tigr -threshold 9.82 -scale 100.0 -dbtype rps -index true
+# echo "Making profile (PSSM) databases of CDD, COG, KOG, Pfam, Prk, Smart, Tigr"
+
+# makeprofiledb -title Cdd_NCBI -in Cdd_NCBI.pn -out ../Cdd_NCBI -threshold 9.82 -scale 100.0 -dbtype rps -index true
+# makeprofiledb -title Cog -in Cog.pn -out ../Cog -threshold 9.82 -scale 100.0 -dbtype rps -index true
+# makeprofiledb -title Kog -in Kog.pn -out ../Kog -threshold 9.82 -scale 100.0 -dbtype rps -index true
+# makeprofiledb -title Pfam -in Pfam.pn -out ../Pfam -threshold 9.82 -scale 100.0 -dbtype rps -index true
+# makeprofiledb -title Prk -in Prk.pn -out ../Prk -threshold 9.82 -scale 100.0 -dbtype rps -index true
+# makeprofiledb -title Smart -in Smart.pn -out ../Smart -threshold 9.82 -scale 100.0 -dbtype rps -index true
+# makeprofiledb -title Tigr -in Tigr.pn -out ../Tigr -threshold 9.82 -scale 100.0 -dbtype rps -index true
+
+makeprofiledb -title SMART.v6.0 -in Smart.pn -out ../Smart -threshold 9.82 -scale 100.0 -dbtype rps -index true
+makeprofiledb -title Pfam.v.35.0 -in Pfam.pn -out ../Pfam -threshold 9.82 -scale 100.0 -dbtype rps -index true
+makeprofiledb -title COG.v.2.0 -in Cog.pn -out ../Cog -threshold 9.82 -scale 100.0 -dbtype rps -index true
+makeprofiledb -title KOG.v.1.0 -in Kog.pn -out ../Kog -threshold 9.82 -scale 100.0 -dbtype rps -index true
+makeprofiledb -title CDD.v.3.12 -in Cdd.pn -out ../Cdd -threshold 9.82 -scale 100.0 -dbtype rps -index true
+makeprofiledb -title CDD_NCBI.v.3.21 -in Cdd_NCBI.pn -out ../Cdd_NCBI -threshold 9.82 -scale 100.0 -dbtype rps -index true
+makeprofiledb -title PRK.v.6.00 -in Prk.pn -out ../Prk -threshold 9.82 -scale 100.0 -dbtype rps -index true
+
 
 echo "Cleaning up"
 cd ..

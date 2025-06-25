@@ -21,7 +21,8 @@ def cdd():
         'bash',
         os.path.join(fetchDB, 'download-cdd-pssm.sh'),
         version,
-        os.path.join(dbDir, 'cdd')
+        os.path.join(dbDir, 'cdd'),
+        '/usr/local/bin/'
         ])
 
 def pfam():

@@ -49,6 +49,12 @@ RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast
     rm -rf /tmp/blast*
 
 
+# Install TMHMM
+# ENV TMHMMKEY="63374a58-11ea-41bd-9d71-84acbc5cf611"
+# RUN wget https://services.healthtech.dtu.dk/download/${TMHMMKEY}/tmhmm-2.0c.Linux.tar.gz -O /tmp/tmhmm.tar.gz && \
+#     tar -xzf /tmp/tmhmm.tar.gz -C /tmp && \
+
+
 # # ---------- Install Docker CLI manually ----------
 # RUN curl -L https://download.docker.com/linux/static/stable/x86_64/docker-24.0.7.tgz -o docker.tgz && \
 #     tar xzvf docker.tgz && \
