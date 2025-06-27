@@ -20,7 +20,7 @@ services:
 
   celery:
     build: .
-    container_name: celery_worker
+    # container_name: celery_worker
     command: celery -A app.celery worker --loglevel=info
     env_file:
       - .env
