@@ -43,7 +43,7 @@ RUN git clone https://github.com/soedinglab/hh-suite.git && \
 ENV PATH="/hh-suite/build/bin:/hh-suite/build/scripts:$PATH"
 
 # Install BLAST
-RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.16.0+-aarch64-linux.tar.gz -O /tmp/blast.tar.gz && \
+RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.16.0+-x64-linux.tar.gz -O /tmp/blast.tar.gz && \
     tar -xzf /tmp/blast.tar.gz -C /tmp && \
     mv /tmp/ncbi-blast*/bin/* /usr/local/bin/ && \
     rm -rf /tmp/blast*
